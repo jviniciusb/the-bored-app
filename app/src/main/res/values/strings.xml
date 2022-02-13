@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">The Bored App</string>
+    <string name="get_activity">Get an activity to do!</string>
+    <string name="activity_name_tile">Activity:</string>
+    <string name="activity_type_title">Type:</string>
+    <string name="activity_participants_title">Participants:</string>
+    <string name="activity_link_title">More info:</string>
+    <string name="error">Error!</string>
+</resources>
