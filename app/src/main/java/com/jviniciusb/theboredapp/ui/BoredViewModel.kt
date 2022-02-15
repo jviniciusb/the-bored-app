@@ -13,8 +13,7 @@ import kotlinx.coroutines.launch
 class BoredViewModel(private val getActivity: GetActivityUseCase) : ViewModel() {
 
     private val _activity = MutableLiveData<Result<ActivityUi>>()
-    val activity: LiveData<Result<ActivityUi>>
-        get() = _activity
+    val activity: LiveData<Result<ActivityUi>> = _activity
 
     fun handleBoredEvent(event: BoredEvent) = when (event) {
 
@@ -35,3 +34,4 @@ class BoredViewModel(private val getActivity: GetActivityUseCase) : ViewModel() 
         }
     }
 }
+

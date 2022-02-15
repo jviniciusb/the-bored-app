@@ -6,10 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jviniciusb.theboredapp.R
 import com.jviniciusb.theboredapp.databinding.ActivityBoredBinding
 import com.jviniciusb.theboredapp.ui.model.ActivityUi
+import com.jviniciusb.theboredapp.ui.model.BoredEvent
 import koleton.api.hideSkeleton
 import koleton.api.loadSkeleton
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BoredActivity : AppCompatActivity() {
+
+    private val boredViewModel by viewModel<BoredViewModel>()
 
     private lateinit var binding: ActivityBoredBinding
 
@@ -18,6 +22,7 @@ class BoredActivity : AppCompatActivity() {
 
         binding = ActivityBoredBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         setupListeners()
         setupObservers()
         showEmptyState()
@@ -31,12 +36,21 @@ class BoredActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        TODO("Not yet implemented")
+
+        boredViewModel.activity.observe(this) { result ->
+            result ?: return@observe
+
+            result.getOrNull()?.let { activity ->
+                showSuccessSate(activity)
+            } ?: run {
+                showErrorState()
+            }
+        }
     }
 
     private fun onGetActivityPressed() {
-        TODO("Add call to viewModel")
         togleLoadingState(isLoading = true)
+        boredViewModel.handleBoredEvent(BoredEvent.LoadActivity)
     }
 
     private fun showSuccessSate(activityUi: ActivityUi) {
