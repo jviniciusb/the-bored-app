@@ -7,6 +7,7 @@ import com.jviniciusb.theboredapp.data.repository.ActivityRepositoryImpl
 import com.jviniciusb.theboredapp.domain.usecase.GetActivityUseCase
 import com.jviniciusb.theboredapp.domain.usecase.GetActivityUseCaseImpl
 import com.jviniciusb.theboredapp.network.ApiClientFactory
+import com.jviniciusb.theboredapp.network.BoredApiClient
 import com.jviniciusb.theboredapp.ui.BoredViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -17,15 +18,14 @@ object BoredModule {
 
     val module = module {
 
-        factory<ActivityRemoteDataSource> {
-            ActivityRemoteDataSourceImpl(
-                ApiClientFactory.createClient(
-                    getProperty(
-                        BORED_API_BASE_URL_KEY
-                    )
+        factory<BoredApiClient> {
+            ApiClientFactory.createClient(
+                getProperty(
+                    BORED_API_BASE_URL_KEY
                 )
             )
         }
+        factory<ActivityRemoteDataSource> { ActivityRemoteDataSourceImpl(get()) }
         factory<ActivityRepository> { ActivityRepositoryImpl(get()) }
         factory<GetActivityUseCase> { GetActivityUseCaseImpl(get()) }
 
